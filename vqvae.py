@@ -8,6 +8,9 @@ import torchvision.transforms as T
 
 import requests, io
 
+def get_image(path):
+    return Image.open(path)
+
 def download_image(url):
     resp = requests.get(url)
     resp.raise_for_status()
@@ -42,7 +45,20 @@ def custom_to_pil(x):
 def display(rec):
     before_process = rec[0]
     after_process  = preprocess_vqgan(before_process)
-    custom_to_pil(np.array(after_process))
+    return custom_to_pil(np.array(after_process))
+
+def recon(url, vqgan_model, size=384):
+    size=size
+    if url.startswith("http"):
+        image = download_image(url)
+    else:
+        image = get_image(url)
+    image = preprocess(image, size)
+    quant_states, indices = vqgan_model.encode(image)
+    print(quant_states.shape, indices.shape)
+    # rec                   = vqgan_model.decode(quant_states)
+    rec                   = vqgan_model.decode_code(indices)
+    return quant_states, indices, rec
 
 class VQGAN(object):
     def __init__(self, repo, commit_id):
@@ -55,4 +71,8 @@ class VQGAN(object):
 
     def decode(self, quant_states):
         rec = self.vqgan.decode(quant_states, params=self.vqgan_params)
+        return rec
+    
+    def decode_code(self, indices):
+        rec = self.vqgan.decode_code(indices, params=self.vqgan_params)
         return rec
