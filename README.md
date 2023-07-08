@@ -19,6 +19,7 @@ based model from lucidrains.
    - [x] Just encode text using chars for now
    - [x] Auto-regressively predict VQ-VAE codes from text tokens
 - [x] CIFAR 10 results bad. Perhaps because VQ-VAE bad with images below 64x64, switching to Tiny ImageNet.
-- [-] Validate Tiny ImageNet captions and images (so they matchup)
-   - Invalid for some reason.
-- [ ] Overfit DALL-E model on one caption image pair.
+- [x] Validate Tiny ImageNet captions and images (so they matchup)
+   - Labels needed to be sorted same as the trainloader/testloader.
+- [x] Overfit DALL-E model on one caption image pair.
+- [ ] Overfit DALL-E model on one batch of caption image pairs.
