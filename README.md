@@ -22,4 +22,4 @@ based model from lucidrains.
 - [x] Validate Tiny ImageNet captions and images (so they matchup)
    - Labels needed to be sorted same as the trainloader/testloader.
 - [x] Overfit DALL-E model on one caption image pair.
-- [ ] Overfit DALL-E model on one batch of caption image pairs.
+- [x] Overfit DALL-E model on one batch of caption image pairs.
